@@ -4,17 +4,8 @@ from .models import *
 # Register your models here.
 
 
-class EmployeeAdmin(admin.ModelAdmin):
-   list_display = (
-       "type",
-       "names",
-   )
-
-   search_fields = (
-       "type",
-       "names",
-   )
-
-admin.site.register(Employee, EmployeeAdmin)
-admin.site.register(Type)
 admin.site.register(Category)
+admin.site.register(Product)
+admin.site.register(Client)
+admin.site.register(Sale)
+admin.site.register(DetSale)

@@ -62,7 +62,10 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
+            BASE_DIR/ 'templates/Inicio',
             BASE_DIR/ 'Homepage/templates',
+            BASE_DIR/ 'MiApp/templates/category',
+
         ],
         'APP_DIRS': True,
         'OPTIONS': {
