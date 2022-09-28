@@ -39,6 +39,30 @@
         </button>
     </div>
 
+    
+    
 </div>
+<button class="btn btn-primary btn-flat btnTest">Home</button>
 
+
+<script type="application/javascript">
+    $(function () {
+        $('.btnTest').on('click', function () {
+            $.ajax({
+                url: "/Miapp/",
+                type: "POST",
+                data: {id: 1},
+                dataType: "json"   
+            }).done(function(data){
+                console.log(data);
+            }).fail(function(data){
+                alert("error");
+            }).always(function(data){
+                
+        });
+    })
+});
+
+
+</script>
 {% endblock %}
