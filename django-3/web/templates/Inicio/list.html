@@ -59,6 +59,9 @@
         $('#data').DataTable({
             responsive: true,
             autoWidth: false, 
+            "language": {
+                url: "{% static 'lib/DataTables/js/spanish.txt' %}"
+            }
         });
     });
 </script>
