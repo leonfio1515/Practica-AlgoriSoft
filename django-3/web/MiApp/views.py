@@ -1,4 +1,5 @@
 from msilib.schema import ListView
+from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, CreateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
@@ -7,7 +8,7 @@ from .forms import *
 from MiApp.forms import CategoryForm
 from .models import *
 from django.urls import reverse_lazy
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 # Create your views here.
 
 
@@ -48,7 +49,18 @@ class CategoryCreateView(CreateView):
     template_name = "create.html"
     success_url = reverse_lazy('category_list')
 
+    def post(self,request,*args,**kwargs):
+        print(request.POST)
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(self.success_url)
+        self.object = None
+        context= self.get_context_data(**kwargs)
+        context["form"] = form
+        return render(request,self.template_name, context)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Creacion de una categoria'
-        return context    
+        return context
