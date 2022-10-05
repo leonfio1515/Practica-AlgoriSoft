@@ -7,6 +7,8 @@
 (function() {
   "use strict";
 
+  notificacionSwal("Error al guardar",errors, "error", "OK")
+
   /**
    * Easy selector helper function
    */
