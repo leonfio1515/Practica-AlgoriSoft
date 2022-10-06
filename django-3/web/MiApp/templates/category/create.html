@@ -37,7 +37,9 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {% if form.errors %}
-<script> var errors = "" </script>
+<script> var errors = "" 
+</script>
+
     {% for field in form %}
         {% for error in field.errors %}
         <script>errors = '{{ error }}';</script>
@@ -55,5 +57,22 @@
 
 {% endif %}
 
+<script>
+    $('form').on('submit', function(e){
+        e.preventDefault();
+        var parameters = $(this).serializeArray();
+        $.ajax({
+            url: "/Miapp/category/create/",
+                type: "POST",
+                data: {id: 3},
+                dataType: "json"   
+            }).done(function(data){
+                console.log(data);
+            }).fail(function(data){
+                alert("error");
+            }).always(function(data){ 
+        })
+    });
+</script>
 
 {% endblock %}
