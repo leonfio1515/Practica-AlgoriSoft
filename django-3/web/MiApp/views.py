@@ -1,6 +1,6 @@
 from msilib.schema import ListView
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, CreateView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -65,22 +65,67 @@ class CategoryCreateView(CreateView):
             data["error"] = str(e)
         return JsonResponse(data)
 
-    # def post(self,request,*args,**kwargs):
-    #     print(request.POST)
-    #     form = CategoryForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         return HttpResponseRedirect(self.success_url)
-    #     self.object = None
-    #     context= self.get_context_data(**kwargs)
-    #     context["form"] = form
-    #     return render(request,self.template_name, context)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Creacion de una categoria'
         context['list_url'] = reverse_lazy('category_list')
         context['entity'] = 'Categorias'
         context['action'] = 'add'
+        return context
 
+class CategoryUpdateView(UpdateView):
+    model = Category
+    form_class = CategoryForm
+    template_name = "create.html"
+    success_url = reverse_lazy('category_list')
+
+    def dispatch(self, request, *args, **kwars):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwars)
+
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+            else:
+                data['error'] = 'No ha ingresado a ninguna opcion'
+        except Exception as e:
+            data["error"] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Edicion de una categoria'
+        context['list_url'] = reverse_lazy('category_list')
+        context['entity'] = 'Categorias'
+        context['action'] = 'edit'
+        return context
+
+class CategoryDeleteView(DeleteView):
+    model = Category
+    template_name = "delete.html"
+    success_url = reverse_lazy('category_list')
+
+    def dispatch(self, request, *args, **kwars):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwars)
+
+    def post(self, request, *args, **kwargs):
+        data = {}
+        try:
+            self.object.delete()
+        except Exception as e:
+            data["error"] = str(e)
+        return JsonResponse(data)
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Eliminacion de una categoria'
+        context['list_url'] = reverse_lazy('category_list')
+        context['entity'] = 'Categorias'
         return context

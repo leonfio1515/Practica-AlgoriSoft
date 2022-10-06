@@ -7,7 +7,12 @@
     <div class="card card-default">
         <div class="carg-header">
             <h3 class="card-title">
+                {% if action == "add" %}
                 <i class="fas fa-plus"></i>
+                {% else %}
+                <i class="fas fa-edit"></i>
+
+                {% endif %}
                 {{title}}
             </h3>
         </div>
@@ -64,14 +69,14 @@
         e.preventDefault();
         var parameters = $(this).serializeArray();
         $.ajax({
-            url: '/Miapp/category/add/',
-                type: 'POST',
-                data: parameters,
-                dataType: "json"   
-            }).done(function(data){
-                if (!data.hasOwnProperty('error')){
-                    Location.href = '{{ list_url }}';
-                    return false;
+            url: window.location.pathname,
+            type: 'POST',
+            data: parameters,
+            dataType: "json"   
+        }).done(function (data) {
+            if(!data.hasOwnProperty('error')){
+                window.location.href = '{{ list_url }}';
+                return false;
                 }
                 message_error(data.error);
             }).fail(function(jqXHR, textStatus, errorThrown) {
