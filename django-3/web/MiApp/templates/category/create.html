@@ -14,6 +14,7 @@
     
         <div class="card-body">
             {% csrf_token %}
+            <input type="hidden" name="action" value="{{ action }}">
 
             {% for field in form.visible_fields %}
                 <div class="form-group">
@@ -57,21 +58,26 @@
 
 {% endif %}
 
+
 <script>
-    $('form').on('submit', function(e){
+    $('form').on('submit', function (e) {
         e.preventDefault();
         var parameters = $(this).serializeArray();
         $.ajax({
-            url: "/Miapp/category/create/",
-                type: "POST",
-                data: {id: 3},
+            url: '/Miapp/category/add/',
+                type: 'POST',
+                data: parameters,
                 dataType: "json"   
             }).done(function(data){
-                console.log(data);
-            }).fail(function(data){
-                alert("error");
+                if (!data.hasOwnProperty('error')){
+                    Location.href = '{{ list_url }}';
+                    return false;
+                }
+                message_error(data.error);
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                alert(textStatus + ': ' + errorThrown);
             }).always(function(data){ 
-        })
+        });
     });
 </script>
 
