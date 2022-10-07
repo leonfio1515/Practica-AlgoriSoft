@@ -1,6 +1,6 @@
 from msilib.schema import ListView
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, FormView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -8,13 +8,12 @@ from .forms import *
 from MiApp.forms import CategoryForm
 from .models import *
 from django.urls import reverse_lazy
-from django.http import JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse
 # Create your views here.
 
 
 class InicioView(TemplateView):
     template_name = "body.html"
-
 
 class CategoryListView(ListView):
     model = Category
@@ -44,7 +43,6 @@ class CategoryListView(ListView):
         context['list_url'] = reverse_lazy('category_list')
         context['entity'] = 'Categorias'
         return context
-
 
 class CategoryCreateView(CreateView):
     model = Category
@@ -129,3 +127,20 @@ class CategoryDeleteView(DeleteView):
         context['list_url'] = reverse_lazy('category_list')
         context['entity'] = 'Categorias'
         return context
+
+class CategoryFormView(FormView):
+    form_class = CategoryForm
+    template_name = "create.html"
+    success_url = reverse_lazy('category_list')    
+
+    def form_invalid(self, form):
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Formulario| categoria'
+        context['list_url'] = reverse_lazy('category_list')
+        context['entity'] = 'Categorias'
+        context['action'] = 'edit'
+        return context
+    

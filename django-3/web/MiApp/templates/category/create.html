@@ -40,6 +40,7 @@
 
 <!------------Sweet Alert--------------------------------->
 
+
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 {% if form.errors %}
@@ -48,7 +49,7 @@
 
     {% for field in form %}
         {% for error in field.errors %}
-        <script>errors = '{{ error }}';</script>
+        <script>/*errors = '{{ error }}';*/</script>
         {% endfor %}
     {% endfor %}
         
@@ -85,5 +86,7 @@
         });
     });
 </script>
+
+
 
 {% endblock %}
