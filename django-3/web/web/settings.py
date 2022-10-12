@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     'MiApp',
     'Homepage',
+    'Login',
 
 ]
 
@@ -114,6 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LOGIN_URL = '/blog/login'
+LOGIN_REDIRECT_URL = '/Miapp/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

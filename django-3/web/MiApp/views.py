@@ -133,6 +133,9 @@ class CategoryFormView(FormView):
     template_name = "create.html"
     success_url = reverse_lazy('category_list')    
 
+    def form_valid(self, form):
+        return super().form_valid(form)
+
     def form_invalid(self, form):
         return super().form_valid(form)
 
