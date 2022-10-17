@@ -32,6 +32,7 @@
         <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
           <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
+              <img src="{{ request.user.get_image}}" class="img-circle elevation-2" alt="User Image">
               <i class="fas fa-user-cog"> {{ request.user.username }}</i>
             </a>
 
