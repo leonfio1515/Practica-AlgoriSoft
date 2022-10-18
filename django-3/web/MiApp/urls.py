@@ -9,4 +9,5 @@ urlpatterns = [
     path('category/edit/<int:pk>/', CategoryUpdateView.as_view(), name='category_update'),
     path('category/delete/<int:pk>/', CategoryDeleteView.as_view(), name='category_delete'),
     path('category/form/', CategoryFormView.as_view(), name='category_form'),
+    path('client/list/', ClientView.as_view(), name='client_list'),
 ]
